@@ -1,6 +1,8 @@
 package io.zipcoder;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Classroom {
     Student[] students;
@@ -36,16 +38,16 @@ public class Classroom {
    }
 
     public void addStudent(Student student){
-        if(this.students.length > 0){
-            int x =0;
-            for(Student s:students)
+        int x =0;
+        if(this.students.length > 0) {
+            for (Student s : students)
                 x++;
-            if (this.students.length != x)
+        }
+            if (this.students.length != x+1)
             students[x] = student;
             else
                 System.out.println("No room");
         }
-    }
 
    public void removeStudent(String firstName, String lastName){
         Student[] removeStudent = new Student[students.length];
@@ -59,6 +61,19 @@ public class Classroom {
         this.students = Arrays.copyOf(removeStudent,students.length);
    }
 
+   public int lexographicalIsEqual(String name1, String name2){
+        //return 1 if name1 is greater, 0 if name2 is greater and -1 if equal
+       for(int x = 0;x<name1.length()-1;x++) {
+           if(name2.length()<x) {
+               return 0;
+           }
+           if(name1.charAt(x)>name2.charAt(x)) {
+               return 1;
+           }
+       }
+       return -1;
+   }
+
     public Student[] getStudentsByScore(){
         Student temp;
         for(int i =0;i<students.length-1;i++) {
@@ -67,17 +82,41 @@ public class Classroom {
                     temp = this.students[y];
                     this.students[y] = this.students[y + 1];
                     this.students[y + 1] = temp;
-                }else if (this.students[y].getAverageExamScore() == this.students[y + 1].getAverageExamScore()){
-                    if(compare names)
-                        switch
+                } else if (this.students[y].getAverageExamScore() == this.students[y + 1].getAverageExamScore()) {
+                    if ((lexographicalIsEqual(this.students[y].getLastName(), this.students[y + 1].getLastName())) == 1) {
+                        temp = this.students[y];
+                        this.students[y] = this.students[y + 1];
+                        this.students[y + 1] = temp;
+                    } else if((lexographicalIsEqual(this.students[y].getLastName(), this.students[y + 1].getLastName())) == -1){
+                        if ((lexographicalIsEqual(this.students[y].getFirstName(), this.students[y + 1].getFirstName())) == 1) {
+                            temp = this.students[y];
+                            this.students[y] = this.students[y + 1];
+                            this.students[y + 1] = temp;
+                        }
+                    }
+                  }
                 }
             }
+            return this.students;
         }
-        return this.students;
+
+    public Map getGradeBook() {
+        int studentCount = this.students.length;
+        int[]grade = {10,29,50,89,100};
+        int y,z=0, x=0;
+        Student[] studentsToMap = new Student[studentCount];
+        studentsToMap = getStudentsByScore();
+        Map studentsByGrade = new HashMap();
+        while (x < studentCount) {
+            y = (grade[z] * studentCount) / 100;
+            while (x < y){
+                studentsByGrade.put('A', studentsToMap[x]);
+                x++;
+            }
+            z++;
+        }
+        return studentsByGrade;
     }
 
-    public Student[] getGradeBook(){
-
-    }
 
 }

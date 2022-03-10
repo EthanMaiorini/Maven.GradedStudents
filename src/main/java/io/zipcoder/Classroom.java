@@ -46,7 +46,7 @@ public class Classroom {
         while((this.students[x] != null)&& (x<students.length-1)) {
                 x++;
         }
-            if (this.students.length != x)
+            if (students.length > x)
             students[x] = student;
             else
                 System.out.println("No room");
@@ -55,9 +55,11 @@ public class Classroom {
    public void removeStudent(String firstName, String lastName){
         Student[] removeStudent = new Student[students.length];
         int x = 0;
-       while((this.students[x] != null)&& (x<students.length-1)) {
-           if (!(this.students[x].getLastName().equals(lastName))&&(!(this.students[x].getFirstName().equals(firstName)))) {
-               removeStudent[x] = this.students[x];
+       while(x<students.length-1) {
+           if(students[x] !=null) {
+               if (!(students[x].getLastName().equals(lastName)) && (!(students[x].getFirstName().equals(firstName)))) {
+                   removeStudent[x] = students[x];
+               }
            }
            x++;
        }
@@ -101,7 +103,8 @@ public class Classroom {
                             }
                         }
                     }
-                }
+                }else if (students[y] == null) removeStudent(students[y].getFirstName(),students[y].getLastName());
+                else if(students[y+1] == null) removeStudent(students[y+1].getFirstName(),students[y+1].getLastName());
             }
             }
             return this.students;
@@ -116,7 +119,7 @@ public class Classroom {
         Map studentsByGrade = new HashMap();
         while (x < studentCount) {
             y = (grade[z] * studentCount) / 100;
-            while (x < y){
+            while ((x < y)&&(studentsToMap[x] != null)){
                 studentsByGrade.put(studentsToMap[x],gradeValue[z]);
                 x++;
             }

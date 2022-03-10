@@ -89,18 +89,20 @@ public class Classroom {
        int length = students.length -1;
         for(int i =0;i<length;i++) {
             for (int y = 0; y < length- i; y++) {
-                if ((this.students[y].getAverageExamScore()) < (this.students[y + 1].getAverageExamScore())) {
-                 this.students = switchArr(this.students,y);
-                } else if (this.students[y].getAverageExamScore() == this.students[y + 1].getAverageExamScore()) {
-                    if ((lexographicalIsEqual(this.students[y].getLastName(), this.students[y + 1].getLastName())) == 1) {
-                        this.students = switchArr(this.students,y);
-                    } else if((lexographicalIsEqual(this.students[y].getLastName(), this.students[y + 1].getLastName())) == -1){
-                        if ((lexographicalIsEqual(this.students[y].getFirstName(), this.students[y + 1].getFirstName())) == 1) {
-                            this.students = switchArr(this.students,y);
+                if ((this.students[y] != null)&&(this.students[y+1] != null)) {
+                    if ((this.students[y].getAverageExamScore()) < (this.students[y + 1].getAverageExamScore())) {
+                        this.students = switchArr(this.students, y);
+                    } else if (this.students[y].getAverageExamScore() == this.students[y + 1].getAverageExamScore()) {
+                        if ((lexographicalIsEqual(this.students[y].getLastName(), this.students[y + 1].getLastName())) == 1) {
+                            this.students = switchArr(this.students, y);
+                        } else if ((lexographicalIsEqual(this.students[y].getLastName(), this.students[y + 1].getLastName())) == -1) {
+                            if ((lexographicalIsEqual(this.students[y].getFirstName(), this.students[y + 1].getFirstName())) == 1) {
+                                this.students = switchArr(this.students, y);
+                            }
                         }
                     }
-                  }
                 }
+            }
             }
             return this.students;
         }

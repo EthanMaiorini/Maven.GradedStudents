@@ -307,4 +307,41 @@ public class ClassroomTest {
 
     }
 
+    @Test
+    public void testAddStudent() {
+        // : Given
+        String firstName = "Leon";
+        String lastName = "Hunter";
+        ArrayList<Double> examScores = new ArrayList<>();
+        examScores.add(100.0);
+        examScores.add(150.0);
+        examScores.add(250.0);
+        examScores.add(0.0);
+        Student student = new Student(firstName, lastName, examScores);
+        Classroom classroom = new Classroom(1);
+        classroom.addStudent(student);
+        String firstName3 = "Lou";
+        String lastName3 = "Dam";
+        ArrayList<Double> examScores3 = new ArrayList<>();
+        examScores3.add(80.0);
+        examScores3.add(180.0);
+        examScores3.add( 150.0);
+        examScores3.add(40.0);
+        Student student3 = new Student(firstName3, lastName3, examScores3);
+        classroom.addStudent(student3);
+
+
+        // When
+        Student[] students = classroom.getStudent();
+        String output = "";
+        int x =0;
+        while((x<students.length)&&(students[x] != null)) {
+            output += students[x].toString();
+            x++;
+        }
+
+        // Then
+        String result = ("Student Name: Leon Hunter \n> Average Score: 125.0 \nExam Scores: \n   Exam 1 -> 100.0 \n   Exam 2 -> 150.0 \n   Exam 3 -> 250.0 \n   Exam 4 -> 0.0 \n");
+        Assert.assertEquals(result,output);
+    }
 }

@@ -43,12 +43,12 @@ public class Classroom {
 
     public void addStudent(Student student){
         int x =0;
-        while((this.students[x] != null)&& (x<students.length-1)) {
+        while( (x<=students.length-1)&&(this.students[x] != null)) {
                 x++;
         }
-            if (students.length > x)
-            students[x] = student;
-            else
+            if (students.length > x) {
+                students[x] = student;
+            } else
                 System.out.println("No room");
         }
 
